@@ -22,24 +22,21 @@ def printendFrame():
     print("-------------------------------------------------------------------")
     print("Enter: show, search, search(name,grade), change(score,name), add, remove, quit ")
 
-def show():
+def show(member):
     member.sort(key=lambda x: x[4], reverse=True)
-    printFrame()
     for i in member:
         print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
-    printendFrame()
 
 def search():
     searchId = int(input("Student ID: "))
     temp = []
     for i in member:
         if searchId == i[0]:
-            data = "%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5])
-            temp.append(data)
+            temp.append(i)
             break
     if len(temp) != 0:
         printFrame()
-        print(data)
+        show(temp)
         printendFrame()
     else:
         print("NO SUCH PERSON.")
@@ -49,22 +46,20 @@ def searchname():
     temp = []
     for i in member:
         if searchName == i[1].replace(" ","").lower():
-            data = "%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5])
-            temp.append(data)
+            temp.append(i)
     if len(temp) != 0:
         printFrame()
-        for i in range(len(temp)):
-            print(temp[i])
+        show(temp)
         printendFrame()
     else:
         print("NO SUCH PERSON.")
 
 def changescore():
     search = int(input("Student ID: "))
-    temp = False
+    temp = []
     for i in member:
         if search == i[0]:
-            temp = True
+            temp.append(i)
             score = input("Mid/Final? ").lower()
             if score == 'mid':
                 mscore = int(input("Input new score: "))
@@ -73,13 +68,13 @@ def changescore():
                     break
                 else:
                     printFrame()
-                    print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                    show(temp)
                     print("Score changed.")
                     i[2] = mscore
                     changeAve = float((i[2] + i[3]) / 2)
                     i[4] = changeAve
                     i[5] = grade(changeAve)
-                    print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                    show(temp)
                     printendFrame()
                     break
             elif score == 'final':
@@ -89,51 +84,51 @@ def changescore():
                     break
                 else:
                     printFrame()
-                    print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                    show(temp)
                     print("Score changed.")
                     i[3] = fscore
                     changeAve = float((i[2] + i[3]) / 2)
                     i[4] = changeAve
                     i[5] = grade(changeAve)
-                    print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                    show(temp)
                     printendFrame()
                     break
             else:
                 print("잘못 입력하셨습니다.")
                 break
-    if temp == False:
+    if len(temp) == 0:
         print("NO SUCH PERSON.")
 
 def changename():
     changeName = input("Student ID or Name: ")
-    temp = False
+    temp = []
     if changeName.isdigit() == True:
         changeName = int(changeName)
         for i in member:
             if changeName == i[0]:
-                temp = True
+                temp.append(i)
                 name = input("Input new name: ")
                 printFrame()
-                print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                show(temp)
                 print("Name changed.")
                 i[1] = name
-                print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                show(temp)
                 printendFrame()
                 break
     else:
         changeName = changeName.replace(" ","").lower()
         for i in member:
             if changeName == i[1].replace(" ","").lower():
-                temp = True
+                temp.append(i)
                 name = input("Input new name: ")
                 printFrame()
-                print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                show(temp)
                 print("Name changed.")
                 i[1] = name
-                print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+                show(temp)
                 printendFrame()
                 break
-    if temp == False:
+    if len(temp) == 0:
         print("NO SUCH PERSON.")
 
 def add():
@@ -146,34 +141,35 @@ def add():
             break
     if temp == True:
         addName = input("Name: ")
-        addMid = int(input("Midterm Score: "))
         while True:
+            addMid = int(input("Midterm Score: "))
             if addMid < 0 or addMid > 100:
                 print("다시 입력하세요.")
                 continue
-        addFin = int(input("Final Score: "))
+            else:
+                break
         while True:
+            addFin = int(input("Final Score: "))
             if addFin < 0 or addFin > 100:
                 print("다시 입력하세요.")
                 continue
+            else:
+                break
         print("Student added.")
         addAverage = float((addMid + addFin) / 2)
         member.append([addId, addName, addMid, addFin, addAverage, grade(addAverage)])
 
 def searchgrade():
     searchgrade = input("Grade to search: ").upper()
-    tempSearch = []
+    temp = []
     for i in member:
         if searchgrade == 'A' or searchgrade == 'B' or searchgrade == 'C' or searchgrade == 'D' or searchgrade == 'F':
             if searchgrade == i[5]:
-                tempSearch.append(i)
-        else:
-            print("잘못 입력하셨습니다.")
+                temp.append(i)
             break
-    if len(tempSearch) != 0:
+    if len(temp) != 0:
         printFrame()
-        for i in tempSearch:
-            print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
+        show(temp)
         printendFrame()
     else:
         print("NO RESULTS.")
@@ -221,12 +217,16 @@ for i in a:
     temp.append(average)
     temp.append(grade(average))
     member.append(temp)
-show()
+printFrame()
+show(member)
+printendFrame()
 
 while True:
     cmd = input("# ").replace(" ", "").lower()
     if cmd == "show":
-        show()
+        printFrame()
+        show(member)
+        printendFrame()
     elif cmd == "search":
         search()
     elif cmd == "searchname":
