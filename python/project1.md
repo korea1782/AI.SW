@@ -207,17 +207,28 @@ def quit(member):
     return temp
 
 # Main
-def main():
-    fr = open("students.txt", "r")
-    a = fr.readlines()
+def readdata(data):
     member = []
-    for i in a:
+    for i in data:
         temp = i.split('\t')
         temp[0], temp[2], temp[3] = int(temp[0]), int(temp[2]), int(temp[3].strip())
         average = float((temp[2] + temp[3]) / 2)
         temp.append(average)
         temp.append(grade(average))
         member.append(temp)
+    return member
+
+def main():
+    import sys
+    import os
+    if os.path.exists(sys.argv[1]) == True:
+        with open(sys.argv[1], "r") as fr:
+            data = fr.readlines()
+            member = readdata(data)
+    else:
+        with open("students.txt", "r") as fr:
+            data = fr.readlines()
+            member = readdata(data)
     printFrame()
     show(member)
     printendFrame()
@@ -245,7 +256,6 @@ def main():
         elif cmd == "quit":
             temp = quit(member)
             if temp == True:
-                fr.close()
                 break
         else:
             continue
