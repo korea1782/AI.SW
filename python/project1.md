@@ -27,7 +27,7 @@ def show(member):
     for i in member:
         print("%8d %15s %8d %8d %8.1f %6s" % (i[0], i[1], i[2], i[3], i[4], i[5]))
 
-def search():
+def search(member):
     searchId = int(input("Student ID: "))
     temp = []
     for i in member:
@@ -41,7 +41,7 @@ def search():
     else:
         print("NO SUCH PERSON.")
 
-def searchname():
+def searchname(member):
     searchName = input("Student Name: ").replace(" ", "").lower()
     temp = []
     for i in member:
@@ -54,7 +54,7 @@ def searchname():
     else:
         print("NO SUCH PERSON.")
 
-def changescore():
+def changescore(member):
     search = int(input("Student ID: "))
     temp = []
     for i in member:
@@ -99,7 +99,7 @@ def changescore():
     if len(temp) == 0:
         print("NO SUCH PERSON.")
 
-def changename():
+def changename(member):
     changeName = input("Student ID or Name: ")
     temp = []
     if changeName.isdigit() == True:
@@ -131,7 +131,7 @@ def changename():
     if len(temp) == 0:
         print("NO SUCH PERSON.")
 
-def add():
+def add(member):
     addId = int(input("Student ID: "))
     temp = True
     for i in member:
@@ -159,7 +159,7 @@ def add():
         addAverage = float((addMid + addFin) / 2)
         member.append([addId, addName, addMid, addFin, addAverage, grade(addAverage)])
 
-def searchgrade():
+def searchgrade(member):
     searchgrade = input("Grade to search: ").upper()
     temp = []
     for i in member:
@@ -174,7 +174,7 @@ def searchgrade():
     else:
         print("NO RESULTS.")
 
-def remove():
+def remove(member):
     temp = False
     if len(member) != 0:
         removeId = int(input("StudentID: "))
@@ -189,16 +189,16 @@ def remove():
     else:
         print("List is empty.")
 
-def quit():
+def quit(member):
     saveData = input("Save data?[yes/no] ").lower()
     temp = False
     if saveData == 'yes':
         member.sort(key=lambda x: x[4], reverse=True)
-        fw = open(input("File name: "), "w")
-        for i in member:
-            data = "%d\t%s\t%d\t%d\n" % (i[0], i[1], i[2], i[3])
-            fw.write(data)
-        fw.close()
+        filename = input("File name: ")
+        with open(filename, "w") as fw:
+            for i in member:
+                data = "%d\t%s\t%d\t%d\n" % (i[0], i[1], i[2], i[3])
+                fw.write(data)
         temp = True
     elif saveData == 'no':
         temp = True
@@ -207,45 +207,49 @@ def quit():
     return temp
 
 # Main
-fr =open("students.txt", "r")
-a = fr.readlines()
-member = []
-for i in a:
-    temp = i.split('\t')
-    temp[0], temp[2], temp[3] = int(temp[0]), int(temp[2]), int(temp[3].strip())
-    average = float((temp[2]+temp[3])/2)
-    temp.append(average)
-    temp.append(grade(average))
-    member.append(temp)
-printFrame()
-show(member)
-printendFrame()
+def main():
+    fr = open("students.txt", "r")
+    a = fr.readlines()
+    member = []
+    for i in a:
+        temp = i.split('\t')
+        temp[0], temp[2], temp[3] = int(temp[0]), int(temp[2]), int(temp[3].strip())
+        average = float((temp[2] + temp[3]) / 2)
+        temp.append(average)
+        temp.append(grade(average))
+        member.append(temp)
+    printFrame()
+    show(member)
+    printendFrame()
 
-while True:
-    cmd = input("# ").replace(" ", "").lower()
-    if cmd == "show":
-        printFrame()
-        show(member)
-        printendFrame()
-    elif cmd == "search":
-        search()
-    elif cmd == "searchname":
-        searchname()
-    elif cmd == "changescore":
-        changescore()
-    elif cmd == "changename":
-        changename()
-    elif cmd == "add":
-        add()
-    elif cmd == "searchgrade":
-        searchgrade()
-    elif cmd == "remove":
-        remove()
-    elif cmd == "quit":
-        temp = quit()
-        if temp == True:
-            fr.close()
-            break
-    else:
-        continue
+    while True:
+        cmd = input("# ").replace(" ", "").lower()
+        if cmd == "show":
+            printFrame()
+            show(member)
+            printendFrame()
+        elif cmd == "search":
+            search(member)
+        elif cmd == "searchname":
+            searchname(member)
+        elif cmd == "changescore":
+            changescore(member)
+        elif cmd == "changename":
+            changename(member)
+        elif cmd == "add":
+            add(member)
+        elif cmd == "searchgrade":
+            searchgrade(member)
+        elif cmd == "remove":
+            remove(member)
+        elif cmd == "quit":
+            temp = quit(member)
+            if temp == True:
+                fr.close()
+                break
+        else:
+            continue
+
+if __name__=='__main__':
+    main()
 ```
