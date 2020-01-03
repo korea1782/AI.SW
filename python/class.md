@@ -78,7 +78,7 @@ def main():
     print(acc1.get_balance())
     print(acc2.get_balance())
 
-if __name__='__main__':
+if __name__=='__main__':
     main()
 
 ```
