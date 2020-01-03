@@ -55,11 +55,7 @@ class MinBalanceAccount(Account): #Account 클래스를 상속받음
             return True
     def obtain_interest(self): #보너스 이율 반영
         self.balance += (self.balance)*((self.rate+self.bonus_rate)/100.0)
-    def transfer(self, another, amnt):
-        if self.balance - amnt < self.minimum_balance:
-            print('Sorry, minimum balance must be maintained')
-        else:
-            Account.transfer(self, another, amnt)
+
 
 def main():
     # acc1 = MinBalanceAccount()
