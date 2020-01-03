@@ -41,8 +41,9 @@ class MinBalanceAccount(Account): #Account 클래스를 상속받음
 #self.rate = rate
 #Account.num_acc += 1
 #def init을 하지않으면 자동으로 부모 클래스의 init을 상속받는다. 
-#하지만 init을 써주어서 Account 클래스의 init을 상속받기 위해 Account.__init__
-        self.minimum_balance = min_balance
+#하지만 init을 써주어서 Account 클래스의 init을 상속받기 위해 Account.__init__을 해줘야만 한다.
+
+        self.minimum_balance = min_balance 
         self.bonus_rate = b_rate
     def withdraw(self, amnt): # 인출 기능 수정
         if self.balance - amnt < self.minimum_balance:
