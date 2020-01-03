@@ -1,6 +1,6 @@
 by. korea1782
 ```python
-class Account(object):
+class Account(object): #(object)는 안써도 자동으로 object class를 받아온다.
     num_acc=0
 #     balance = 0
 #     rate = 0.0
@@ -40,6 +40,8 @@ class MinBalanceAccount(Account): #Account 클래스를 상속받음
 #self.balance = amnt
 #self.rate = rate
 #Account.num_acc += 1
+#def init을 하지않으면 자동으로 부모 클래스의 init을 상속받는다. 
+#하지만 init을 써주어서 Account 클래스의 init을 상속받기 위해 Account.__init__
         self.minimum_balance = min_balance
         self.bonus_rate = b_rate
     def withdraw(self, amnt): # 인출 기능 수정
