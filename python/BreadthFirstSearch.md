@@ -1,4 +1,4 @@
-#단방향 BFS
+단방향 BFS
 
 ---
 by. korea1782
