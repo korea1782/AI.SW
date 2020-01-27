@@ -2,7 +2,7 @@
 
 ---
 by. korea1782
-```
+```python
 import collections
 import sys
 sys.setrecursionlimit(1000000)
