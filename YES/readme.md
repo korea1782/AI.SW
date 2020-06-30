@@ -1,1 +1,1 @@
-YES Project
+YES AI Project File
