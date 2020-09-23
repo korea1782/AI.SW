@@ -37,7 +37,7 @@ def mergeSort(alist):
 
 # Quick sort 
 # best case less than O(nlogn)
-# worst case n^2
+# worst case O(n^2)
 def quickSort(alist):
     if len(alist) <= 1:
         return alist
